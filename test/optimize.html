@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>canvas {width : 100%; height : 100%}</style>
+	<script type="text/javascript" src="./js/Three/Three.js"></script>
+	
+
+</head>
+<body>
+Time: <span id="time">0</span>s&nbsp;&nbsp;</br>
+Count: <span id="cnt">0</span>&nbsp;&nbsp;</br>
+MeanConsumeTime: <span id="mncnstime">0</span>&nbsp;&nbsp;</br>
+EnterBuffer: <span id="enterbuf">0</span>&nbsp;&nbsp;</br>
+LeaveBuffer: <span id="leavebuf">0</span>&nbsp;&nbsp;</br>
+Income: <span id="income">0</span>&nbsp;&nbsp;</br>
+Cost: <span id="cost">0</span>&nbsp;&nbsp;</br>
+
+<table id="res" border="1">
+<tr><th>(L1,L2)</th>	<th>MeanConsumeTime</th>	<th>EnterBuffer</th>	<th>LeaveBuffer</th>	<th>Income</th></tr>
+<tr><th>(40,40)</th>	<td>&nbsp;</td>				<td>&nbsp;</td>			<td>&nbsp;</td>			<td>&nbsp;</td></tr>
+<tr><th>(40,50)</th>	<td>&nbsp;</td>				<td>&nbsp;</td>			<td>&nbsp;</td>			<td>&nbsp;</td></tr>
+<tr><th>(40,60)</th>	<td>&nbsp;</td>				<td>&nbsp;</td>			<td>&nbsp;</td>			<td>&nbsp;</td></tr>
+<tr><th>(50,40)</th>	<td>&nbsp;</td>				<td>&nbsp;</td>			<td>&nbsp;</td>			<td>&nbsp;</td></tr>
+<tr><th>(50,50)</th>	<td>&nbsp;</td>				<td>&nbsp;</td>			<td>&nbsp;</td>			<td>&nbsp;</td></tr>
+<tr><th>(50,60)</th>	<td>&nbsp;</td>				<td>&nbsp;</td>			<td>&nbsp;</td>			<td>&nbsp;</td></tr>
+<tr><th>(60,40)</th>	<td>&nbsp;</td>				<td>&nbsp;</td>			<td>&nbsp;</td>			<td>&nbsp;</td></tr>
+<tr><th>(60,50)</th>	<td>&nbsp;</td>				<td>&nbsp;</td>			<td>&nbsp;</td>			<td>&nbsp;</td></tr>
+<tr><th>(60,60)</th>	<td>&nbsp;</td>				<td>&nbsp;</td>			<td>&nbsp;</td>			<td>&nbsp;</td></tr>
+<tr><th>(70,40)</th>	<td>&nbsp;</td>				<td>&nbsp;</td>			<td>&nbsp;</td>			<td>&nbsp;</td></tr>
+<tr><th>(70,50)</th>	<td>&nbsp;</td>				<td>&nbsp;</td>			<td>&nbsp;</td>			<td>&nbsp;</td></tr>
+<tr><th>(70,60)</th>	<td>&nbsp;</td>				<td>&nbsp;</td>			<td>&nbsp;</td>			<td>&nbsp;</td></tr>
+<tr><th>(80,40)</th>	<td>&nbsp;</td>				<td>&nbsp;</td>			<td>&nbsp;</td>			<td>&nbsp;</td></tr>
+<tr><th>(80,50)</th>	<td>&nbsp;</td>				<td>&nbsp;</td>			<td>&nbsp;</td>			<td>&nbsp;</td></tr>
+<tr><th>(80,60)</th>	<td>&nbsp;</td>				<td>&nbsp;</td>			<td>&nbsp;</td>			<td>&nbsp;</td></tr>
+</table>
+
+<script type="text/javascript" src="./js/init.js"></script>
+
+<script type="text/javascript" src="./js/logicalPart/constants.js"></script>
+<script type="text/javascript" src="./js/logicalPart/parameters.js"></script>
+<script type="text/javascript" src="./js/logicalPart/getPathMap.js"></script>
+<script type="text/javascript" src="./js/logicalPart/updateCarPos.js"></script>
+<script type="text/javascript" src="./js/logicalPart/path.js"></script>
+<script type="text/javascript" src="./js/logicalPart/leavePath.js"></script>
+<script type="text/javascript" src="./js/logicalPart/car.js"></script>
+<script type="text/javascript" src="./js/logicalPart/logicPart.js"></script>
+
+<script type="text/javascript" src="./js/drawPart/curve.js"></script>
+<script type="text/javascript" src="./js/drawPart/refreshPage.js"></script>
+<script type="text/javascript" src="./js/drawPart/animate.js"></script>
+<script type="text/javascript" src="./js/drawPart/draw.js"></script>
+
+<script type="text/javascript" src="./js/test/testPara.js"></script>
+
+<script type="text/javascript">
+
+function getRow(L1, L2) {
+	return (L1-40) / 10 * 3 + (L2-40) / 10 + 1;
+}
+
+function getL3(L1, L2) {
+	return L3 = (2 * (S-testPara.B*ROADWIDTH*L2)) / ((testPara.L+testPara.B)*ROADWIDTH) - L1;
+}
+
+var RUNTIME = 45;//s
+
+var S = 6000;
+
+// B / L = 3 / 1
+testPara.L = 3;
+testPara.B = 6;
+
+// ETC
+testPara.WAIT_BIG = 6;
+testPara.WAIT_SMALL = 3;
+
+testPara.realL1 = 40;
+testPara.realL2 = 40;
+testPara.realL3 = getL3(testPara.realL1, testPara.realL2);
+
+var tab = document.getElementById("res");
+
+function run() {
+	logicalPart(testPara);
+	drawPart();
+	window.setTimeout(function(){
+		deleteTimers();
+		tab.rows[getRow(realL1, realL2)].cells[1].innerText = _meanConsumedTime;
+		tab.rows[getRow(realL1, realL2)].cells[2].innerText = _cntEnterBuffer / _time;
+		tab.rows[getRow(realL1, realL2)].cells[3].innerText = _cntLeaveBuffer / _time;
+		tab.rows[getRow(realL1, realL2)].cells[4].innerText = _income / L;
+	}, (RUNTIME+INITTIME)*1000);
+}
+run();
+
+</script>
+
+
+</body>
+</html>
+
+
+

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>canvas {width : 100%; height : 100%}</style>
+	<script type="text/javascript" src="./js/Three/Three.js"></script>
+	
+
+</head>
+<body>
+Time: <span id="time">0</span>s&nbsp;&nbsp;</br>
+Count: <span id="cnt">0</span>&nbsp;&nbsp;</br>
+MeanConsumeTime: <span id="mncnstime">0</span>&nbsp;&nbsp;</br>
+EnterBuffer: <span id="enterbuf">0</span>&nbsp;&nbsp;</br>
+LeaveBuffer: <span id="leavebuf">0</span>&nbsp;&nbsp;</br>
+Income: <span id="income">0</span>&nbsp;&nbsp;</br>
+Cost: <span id="cost">0</span>&nbsp;&nbsp;</br>
+
+<table id="res" border="1">
+<tr><th>L</th><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+<tr><th>MeanConsumeTime</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><th>EnterBuffer</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><th>LeaveBuffer</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><th>Income</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><th>Cost</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><th>PassCount</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+<tr><th>Time</th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</table>
+
+<script type="text/javascript" src="./js/init.js"></script>
+
+<script type="text/javascript" src="./js/logicalPart/constants.js"></script>
+<script type="text/javascript" src="./js/logicalPart/parameters.js"></script>
+<script type="text/javascript" src="./js/logicalPart/getPathMap.js"></script>
+<script type="text/javascript" src="./js/logicalPart/updateCarPos.js"></script>
+<script type="text/javascript" src="./js/logicalPart/path.js"></script>
+<script type="text/javascript" src="./js/logicalPart/leavePath.js"></script>
+<script type="text/javascript" src="./js/logicalPart/car.js"></script>
+<script type="text/javascript" src="./js/logicalPart/logicPart.js"></script>
+
+<script type="text/javascript" src="./js/drawPart/curve.js"></script>
+<script type="text/javascript" src="./js/drawPart/refreshPage.js"></script>
+<script type="text/javascript" src="./js/drawPart/animate.js"></script>
+<script type="text/javascript" src="./js/drawPart/draw.js"></script>
+
+<script type="text/javascript" src="./js/test/testPara.js"></script>
+
+<script type="text/javascript">
+
+var RUNTIME = 90;//s
+
+testPara.B = 8;
+var tab = document.getElementById("res");
+
+testPara.L = 1;
+function run() {
+	logicalPart(testPara);
+	drawPart();
+	window.setTimeout(function(){
+		deleteTimers();
+		tab.rows[1].cells[testPara.L].innerText = _meanConsumedTime;
+		tab.rows[2].cells[testPara.L].innerText = _cntEnterBuffer / _time;
+		tab.rows[3].cells[testPara.L].innerText = _cntLeaveBuffer / _time;
+		tab.rows[4].cells[testPara.L].innerText = _income / L;
+		tab.rows[5].cells[testPara.L].innerText = _cost / _time * 60;
+		tab.rows[6].cells[testPara.L].innerText = _cntPass;
+		tab.rows[7].cells[testPara.L].innerText = _time / 60;
+	}, (RUNTIME+INITTIME)*1000);
+}
+run();
+
+</script>
+
+
+</body>
+</html>
+
+
+
